@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AI-powered Text & Audio to Image Generator">
+    <meta name="description" content="Transform your imagination into stunning AI-generated images">
     <title>AI Image Generator</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -15,7 +15,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/styles/styles.css">
@@ -40,8 +40,10 @@
             <!-- Header Section -->
             <header class="header">
                 <div class="logo-animation">
-                    <div class="magic-wand">✨</div>
-                    <h1 class="title">AI Image Generator <span class="title-icon">🎨</span></h1>
+                    <div class="magic-wand">
+                        <i class="fas fa-sparkles"></i>
+                    </div>
+                    <h1 class="title">AI Image Generator <i class="fas fa-palette title-icon"></i></h1>
                 </div>
                 <p class="subtitle typewriter">Transform your words and voice into stunning images</p>
             </header>
@@ -69,7 +71,7 @@
 
                     <button id="recordButton" class="btn record-btn hover-float" aria-label="Record audio">
                         <i class="fas fa-microphone"></i>
-                        Record
+                        <span>Record Voice</span>
                     </button>
                 </div>
 
@@ -81,8 +83,8 @@
             <!-- Image Display Section -->
             <div class="image-container">
                 <div class="image-wrapper hover-shadow">
-                    <img id="generatedImage" src="" alt="Generated Image">
-                    <div class="loading-spinner" aria-hidden="true">
+                    <img id="generatedImage" src="" alt="Generated Image" class="fade-in">
+                    <div class="loading-spinner heart-beat" aria-hidden="true">
                         <div class="spinner"></div>
                     </div>
                 </div>
@@ -91,7 +93,7 @@
             <!-- History Section -->
             <div class="history-container fade-in">
                 <div class="history-header">
-                    <h2>Generation History</h2>
+                    <h2><i class="fas fa-history"></i> Generation History</h2>
                     <button id="clearHistoryBtn" class="btn clear-btn hover-rotate" aria-label="Clear history">
                         <i class="fas fa-trash"></i>
                     </button>
