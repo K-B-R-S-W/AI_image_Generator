@@ -198,9 +198,9 @@ The project follows a modular architecture with clear separation of concerns:
 ## 📮 Support
 
 - **📧 Email:** [k.b.ravindusankalpaac@gmail.com](mailto:k.b.ravindusankalpaac@gmail.com)  
-- **🐞 Bug Reports:** [GitHub Issues](https://github.com/K-B-R-S-W/Student_Management_System/issues)  
-- **📚 Documentation:** See the project [Wiki](https://github.com/K-B-R-S-W/Student_Management_System/wiki)  
-- **💭 Discussions:** Join the [GitHub Discussions](https://github.com/K-B-R-S-W/Student_Management_System/discussions)
+- **🐞 Bug Reports:** [GitHub Issues](https://github.com/K-B-R-S-W/AI_image_Generator/issues)  
+- **📚 Documentation:** See the project [Wiki](https://github.com/K-B-R-S-W/AI_image_Generator/wiki)  
+- **💭 Discussions:** Join the [GitHub Discussions](https://github.com/K-B-R-S-W/AI_image_Generator/discussions)
 
 ---
 
