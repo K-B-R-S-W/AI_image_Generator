@@ -27,19 +27,19 @@ Transform your words and voice into stunning AI-generated images! This project u
 
 ```
 ai-image-generator/
-├── frontend/               # Modern JavaScript frontend
+├── frontend/            
 │   ├── src/
-│   │   ├── assets/        # Static assets (images, styles)
-│   │   ├── js/           # JavaScript modules
-│   │   │   ├── constants/  # Configuration and constants
-│   │   │   ├── services/   # Service modules
-│   │   │   └── app.js      # Main application
-│   │   └── index.html    # Main HTML file
-│   └── package.json      # Frontend dependencies
+│   │   ├── assets/     
+│   │   ├── js/        
+│   │   │   ├── constants/ 
+│   │   │   ├── services/  
+│   │   │   └── app.js     
+│   │   └── index.html   
+│   └── package.json      
 │
-├── ai-backend/            # Python-based AI backend
-│   ├── Main.ipynb        # Colab notebook
-│   └── requirements.txt   # Python dependencies
+├── ai-backend/         
+│   ├── Main.ipynb       
+│   └── requirements.txt   
 ```
 
 ## ⚙️ Tech Stack
