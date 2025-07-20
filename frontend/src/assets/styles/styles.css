@@ -1,18 +1,19 @@
 /* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 /* CSS Variables */
 :root {
-    --primary-color: #7c3aed;
-    --secondary-color: #4c1d95;
-    --success-color: #059669;
-    --danger-color: #dc2626;
+    --primary-color: #6366f1;
+    --secondary-color: #4f46e5;
+    --success-color: #10b981;
+    --danger-color: #ef4444;
     --text-color: #1f2937;
     --bg-color: #f3f4f6;
     --card-bg: rgba(255, 255, 255, 0.9);
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
+    --border-radius: 16px;
 }
 
 /* Animated Background */
@@ -22,7 +23,7 @@
     height: 100%;
     top: 0;
     left: 0;
-    background: linear-gradient(45deg, #667eea, #764ba2, #6B8DD6, #8E37D7);
+    background: linear-gradient(-45deg, #6366f1, #4f46e5, #8b5cf6, #7c3aed);
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
     z-index: -1;
@@ -59,14 +60,19 @@
 
 /* Enhanced Glass Card */
 .glass-card {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    padding: 2.5rem;
+    box-shadow: 
+        0 8px 32px 0 rgba(31, 38, 135, 0.15),
+        0 4px 8px 0 rgba(31, 38, 135, 0.1);
     transform: translateY(20px);
     animation: slideUp 0.8s ease forwards;
+    max-width: 90%;
+    width: 800px;
+    margin: 2rem auto;
 }
 
 @keyframes slideUp {
@@ -274,55 +280,64 @@ body {
 }
 
 .input-wrapper {
+    position: relative;
     display: flex;
-    gap: 10px;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    padding: 0.5rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
 }
 
 #textInput {
     flex: 1;
-    padding: 12px 20px;
-    border: 2px solid transparent;
-    border-radius: 10px;
+    padding: 1rem 1.5rem;
     font-size: 1rem;
+    color: var(--text-color);
     background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: calc(var(--border-radius) - 4px);
     transition: all 0.3s ease;
 }
 
 #textInput:focus {
     outline: none;
-    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px var(--primary-color);
     background: white;
 }
 
 .btn {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 10px;
+    padding: 0.75rem 1.5rem;
     font-size: 1rem;
     font-weight: 500;
+    color: white;
+    background: var(--primary-color);
+    border: none;
+    border-radius: calc(var(--border-radius) - 4px);
     cursor: pointer;
-    transition: all 0.3s ease;
     display: flex;
     align-items: center;
-    gap: 8px;
-    background: var(--primary-color);
-    color: white;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
 }
 
 .generate-btn {
-    background: var(--primary-color);
-    color: white;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.25);
 }
 
 .generate-btn:hover {
-    background: var(--secondary-color);
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
 }
 
 .record-btn {
-    background: var(--success-color);
     width: 100%;
     justify-content: center;
+    background: linear-gradient(45deg, #4f46e5, #6366f1);
+    margin-top: 1rem;
 }
 
 .record-btn:hover {
@@ -331,33 +346,38 @@ body {
 }
 
 .record-btn.recording {
-    background: var(--danger-color);
+    background: linear-gradient(45deg, var(--danger-color), #f43f5e);
     animation: pulse 1.5s infinite;
 }
 
-/* Divider */
+/* Divider Styles */
 .divider {
+    display: flex;
+    align-items: center;
     text-align: center;
-    position: relative;
-    margin: 20px 0;
+    margin: 1.5rem 0;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
 }
 
-.divider::before {
+.divider::before,
+.divider::after {
     content: '';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: rgba(0, 0, 0, 0.1);
+    flex: 1;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
 }
 
 .divider span {
-    background: var(--card-bg);
-    padding: 0 15px;
-    color: var(--text-color);
-    position: relative;
-    font-size: 0.9rem;
+    margin: 0 1rem;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
 }
 
 /* Status and Transcription */
@@ -368,32 +388,35 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Image Container */
+/* Image Container Styles */
 .image-container {
-    margin: 30px 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 300px;
+    margin: 2rem 0;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
 }
 
 .image-wrapper {
     position: relative;
     width: 100%;
-    max-width: 512px;
-    border-radius: 10px;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
 }
 
 #generatedImage {
-    width: 100%;
+    max-width: 100%;
     height: auto;
-    display: none;
-    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: calc(var(--border-radius) - 4px);
 }
 
 #generatedImage.visible {
-    display: block;
+    opacity: 1;
 }
 
 .loading-spinner {
@@ -408,39 +431,47 @@ body {
     display: block;
 }
 
-/* History Container */
+/* History Section Styles */
 .history-container {
-    margin-top: 30px;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .history-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 1.5rem;
 }
 
 .history-header h2 {
-    font-size: 1.5rem;
     color: var(--text-color);
+    font-size: 1.5rem;
+    font-weight: 600;
 }
 
 .chat-history {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    max-height: 400px;
+    gap: 1rem;
+    max-height: 300px;
     overflow-y: auto;
+    padding-right: 1rem;
 }
 
 .chat-entry {
-    background: rgba(255, 255, 255, 0.8);
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: var(--shadow-sm);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.chat-entry:hover {
+    transform: translateX(5px);
+    background: rgba(255, 255, 255, 0.15);
 }
 
 /* Footer */
@@ -494,31 +525,53 @@ body {
     }
 }
 
-/* Dark Mode Support */
+/* Dark Mode Styles */
 @media (prefers-color-scheme: dark) {
     :root {
         --text-color: #f3f4f6;
-        --bg-color: #1f2937;
-        --card-bg: rgba(31, 41, 55, 0.9);
+        --bg-color: #111827;
+        --card-bg: rgba(17, 24, 39, 0.8);
     }
 
-    .glass-card,
+    .glass-card {
+        background: rgba(17, 24, 39, 0.3);
+    }
+
+    #textInput {
+        background: rgba(17, 24, 39, 0.8);
+        color: var(--text-color);
+    }
+
     .chat-entry {
-        background: rgba(31, 41, 55, 0.2);
+        background: rgba(17, 24, 39, 0.3);
+    }
+} 
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
     }
 
-    #textInput,
-    .btn {
-        background: rgba(31, 41, 55, 0.8);
-        color: var(--text-color);
+    .glass-card {
+        padding: 1.5rem;
+        margin: 1rem;
     }
 
-    .divider::before {
-        background: rgba(255, 255, 255, 0.1);
+    .input-wrapper {
+        flex-direction: column;
     }
 
-    .divider span {
-        background: var(--card-bg);
-        color: var(--text-color);
+    .generate-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .title {
+        font-size: 1.8rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
     }
 } 
