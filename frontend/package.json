@@ -1,0 +1,23 @@
+{
+  "name": "ai-image-generator-frontend",
+  "version": "1.0.0",
+  "description": "Frontend for AI-powered Text & Audio to Image Generator",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "format": "prettier --write \"src/**/*.{js,jsx,css,html}\""
+  },
+  "dependencies": {
+    "lamejs": "^1.2.1"
+  },
+  "devDependencies": {
+    "vite": "^5.0.12",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.4"
+  },
+  "author": "M.H. Jayasuriya",
+  "license": "MIT"
+} 
