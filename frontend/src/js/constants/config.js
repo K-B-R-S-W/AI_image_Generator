@@ -1,5 +1,5 @@
 export const config = {
-    API_URL: 'https://be30-35-198-254-190.ngrok-free.app/',
+    API_URL: 'https://118aa7a8d191.ngrok-free.app',
     AUDIO: {
         SAMPLE_RATE: 44100,
         CHANNELS: 1,

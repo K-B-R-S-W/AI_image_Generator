@@ -7,38 +7,53 @@ Transform your words and voice into stunning AI-generated images! This project u
 ### Core Features
 - 🗣️ **Voice to Image**: Convert your speech into AI-generated images
 - ✍️ **Text to Image**: Enter a description and get an AI-generated image
+- 🎨 **Background Removal**: Remove backgrounds from images using AI
 - 📚 **History Tracking**: View past generations with a clear history feature
 - ⚡ **Real time Updates**: Live status and processing feedback
+- 💾 **Multiple Export Formats**: Download images as PNG, JPEG, or SVG
 
 ### Frontend Features
 - ✨ Beautiful Animations and Glassmorphism Design
-- 🌙 Dark Mode Support
 - 📱 Responsive Design
 - 🎯 Interactive UI Elements
+- 🖼️ Drag and Drop Image Upload
+- 🔄 Real-time Image Preview
+- 📥 Batch Download Options
+- 🗑️ Clear History Function
+- ⌨️ Keyboard Shortcuts Support
 
 ### Backend Features
 - 🎤 Speech-to-Text using Whisper AI
 - 🖼️ Advanced Image Generation
+- 🎭 Background Removal AI
 - 🔁 Audio Format Conversion
 - 🛜 RESTful API Endpoints
 - 🔐 Secure File Handling
+- 🎵 MP3 Audio Processing
+- 🔄 WebM to MP3 Conversion
 
 ## 📂 Project Structure
 
 ```
 ai-image-generator/
-├── frontend/            
+├── frontend/              
 │   ├── src/
 │   │   ├── assets/     
-│   │   ├── js/        
-│   │   │   ├── constants/ 
-│   │   │   ├── services/  
+│   │   ├── js/          
+│   │   │   ├── constants/  
+│   │   │   ├── pages/    
+│   │   │   │   ├── background-remover.js  
+│   │   │   │   └── image-generator.js  
+│   │   │   ├── services/   
+│   │   │   │   ├── ApiService.js    
+│   │   │   │   ├── AudioService.js  
+│   │   │   │   └── UIService.js     
 │   │   │   └── app.js     
-│   │   └── index.html   
+│   │   └── index.html    
 │   └── package.json      
 │
-├── ai-backend/         
-│   ├── Main.ipynb       
+├── ai-backend/            
+│   ├── Main.ipynb        
 │   └── requirements.txt   
 ```
 
@@ -127,6 +142,23 @@ Handles both text and audio inputs for image generation.
 {
     "image": "base64_encoded_image",
     "text": "transcribed_text"
+}
+```
+
+### POST /remove-background
+Removes background from uploaded images.
+
+#### Request
+```json
+{
+    "imageUrl": "base64_encoded_image"
+}
+```
+
+#### Response
+```json
+{
+    "processedImageUrl": "base64_encoded_processed_image"
 }
 ```
 

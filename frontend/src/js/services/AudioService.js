@@ -37,19 +37,33 @@ export class AudioService {
     }
 
     async stopRecording() {
-        if (this.mediaRecorder && this.mediaRecorder.state !== 'inactive') {
-            return new Promise((resolve) => {
-                this.mediaRecorder.onstop = () => {
-                    this.audioStream.getTracks().forEach(track => track.stop());
-                    this.isRecording = false;
-                    resolve();
-                };
-                this.mediaRecorder.stop();
-            });
+        if (!this.mediaRecorder || this.mediaRecorder.state === 'inactive') {
+            return null;
         }
+
+        return new Promise((resolve) => {
+            this.mediaRecorder.onstop = async () => {
+                this.audioStream.getTracks().forEach(track => track.stop());
+                this.isRecording = false;
+                
+                // Process the audio immediately
+                try {
+                    const audioData = await this.processAudio();
+                    resolve(audioData);
+                } catch (error) {
+                    console.error('Error processing audio:', error);
+                    resolve(null);
+                }
+            };
+            this.mediaRecorder.stop();
+        });
     }
 
     async processAudio() {
+        if (this.audioChunks.length === 0) {
+            throw new Error('No audio data available');
+        }
+
         const audioBlob = new Blob(this.audioChunks, { type: 'audio/webm' });
         const arrayBuffer = await this.blobToArrayBuffer(audioBlob);
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -59,10 +73,14 @@ export class AudioService {
             const samples = audioBuffer.getChannelData(0);
             const mp3Buffer = this.encodeMP3(samples);
             
-            return btoa(String.fromCharCode.apply(null, new Uint8Array(mp3Buffer)));
+            // Convert the MP3 buffer to base64
+            const base64Data = btoa(String.fromCharCode.apply(null, new Uint8Array(mp3Buffer)));
+            return base64Data;
         } catch (error) {
             console.error('Audio processing error:', error);
             throw new Error(`Failed to process audio: ${error.message}`);
+        } finally {
+            audioContext.close();
         }
     }
 

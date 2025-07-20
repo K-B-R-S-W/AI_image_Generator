@@ -7,7 +7,7 @@
     <title>AI Image Generator</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -18,7 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="assets/styles/styles.css">
+    <link rel="stylesheet" href="/assets/styles/styles.css">
 
     <!-- Required Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lamejs/1.2.1/lame.min.js"></script>
@@ -33,77 +33,40 @@
         <div class="light x5"></div>
     </div>
 
-    <!-- Main Container -->
-    <div class="container">
-        <!-- Main Card -->
-        <div class="glass-card">
-            <!-- Header Section -->
-            <header class="header">
-                <div class="logo-animation">
-                    <div class="magic-wand">
-                        <i class="fas fa-sparkles"></i>
-                    </div>
-                    <h1 class="title">AI Image Generator <i class="fas fa-palette title-icon"></i></h1>
-                </div>
-                <p class="subtitle typewriter">Transform your words and voice into stunning images</p>
-            </header>
-
-            <!-- Input Section -->
-            <div class="input-section">
-                <div class="input-container">
-                    <div class="input-wrapper hover-effect">
-                        <input 
-                            type="text" 
-                            id="textInput" 
-                            placeholder="Describe your imagination..."
-                            aria-label="Image description input"
-                            class="glow-effect"
-                        >
-                        <button id="sendTextButton" class="btn generate-btn pulse" aria-label="Generate image">
-                            <i class="fas fa-wand-magic-sparkles"></i>
-                            Generate
-                        </button>
-                    </div>
-                    
-                    <div class="divider">
-                        <span class="bounce">or</span>
-                    </div>
-
-                    <button id="recordButton" class="btn record-btn hover-float" aria-label="Record audio">
-                        <i class="fas fa-microphone"></i>
-                        <span>Record Voice</span>
-                    </button>
-                </div>
-
-                <!-- Status Messages -->
-                <div id="status" class="status" role="status" aria-live="polite"></div>
-                <div id="transcription" class="transcription" aria-live="polite"></div>
-            </div>
-
-            <!-- Image Display Section -->
-            <div class="image-container">
-                <div class="image-wrapper hover-shadow">
-                    <img id="generatedImage" src="" alt="Generated Image" class="fade-in">
-                    <div class="loading-spinner heart-beat" aria-hidden="true">
-                        <div class="spinner"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- History Section -->
-            <div class="history-container fade-in">
-                <div class="history-header">
-                    <h2><i class="fas fa-history"></i> Generation History</h2>
-                    <button id="clearHistoryBtn" class="btn clear-btn hover-rotate" aria-label="Clear history">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-                <div id="chatHistory" class="chat-history"></div>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-sparkles"></i>
+                AI Studio
             </div>
         </div>
-    </div>
+        <nav>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active" data-page="image-generator">
+                        <i class="fas fa-wand-magic-sparkles"></i>
+                        Image Generator
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="background-remover">
+                        <i class="fas fa-cut"></i>
+                        Background Remover
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div id="page-container">
+            <!-- Pages will be dynamically loaded here -->
+        </div>
+    </main>
 
     <!-- Scripts -->
-    <script type="module" src="js/app.js"></script>
+    <script type="module" src="/js/app.js"></script>
 </body>
 </html> 
