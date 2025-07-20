@@ -11,7 +11,11 @@ export class UIService {
             generatedImage: document.getElementById('generatedImage'),
             chatHistory: document.getElementById('chatHistory'),
             loadingSpinner: document.querySelector('.loading-spinner'),
-            clearHistoryBtn: document.getElementById('clearHistoryBtn')
+            clearHistoryBtn: document.getElementById('clearHistoryBtn'),
+            // Add new elements
+            downloadPngBtn: document.getElementById('downloadPng'),
+            downloadJpegBtn: document.getElementById('downloadJpeg'),
+            downloadSvgBtn: document.getElementById('downloadSvg')
         };
 
         this.setupEventListeners();
@@ -21,7 +25,81 @@ export class UIService {
         this.elements.generatedImage.addEventListener('load', () => {
             this.hideLoading();
             this.elements.generatedImage.classList.add('visible');
+            this.enableDownloadButtons();
         });
+
+        // Add download button event listeners
+        this.elements.downloadPngBtn.addEventListener('click', () => this.downloadImage('png'));
+        this.elements.downloadJpegBtn.addEventListener('click', () => this.downloadImage('jpeg'));
+        this.elements.downloadSvgBtn.addEventListener('click', () => this.downloadImage('svg'));
+    }
+
+    enableDownloadButtons() {
+        this.elements.downloadPngBtn.disabled = false;
+        this.elements.downloadJpegBtn.disabled = false;
+        this.elements.downloadSvgBtn.disabled = false;
+    }
+
+    disableDownloadButtons() {
+        this.elements.downloadPngBtn.disabled = true;
+        this.elements.downloadJpegBtn.disabled = true;
+        this.elements.downloadSvgBtn.disabled = true;
+    }
+
+    async downloadImage(format) {
+        const img = this.elements.generatedImage;
+        if (!img.src) return;
+
+        try {
+            // Create a canvas element
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+
+            // Draw the image on canvas
+            ctx.drawImage(img, 0, 0);
+
+            let dataUrl;
+            let fileName;
+
+            switch (format) {
+                case 'png':
+                    dataUrl = canvas.toDataURL('image/png');
+                    fileName = 'generated-image.png';
+                    break;
+                case 'jpeg':
+                    dataUrl = canvas.toDataURL('image/jpeg', 0.9);
+                    fileName = 'generated-image.jpg';
+                    break;
+                case 'svg':
+                    // For SVG, we'll create a simple SVG with the image as a foreign object
+                    const svgData = `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="${canvas.width}" height="${canvas.height}">
+                            <foreignObject width="100%" height="100%">
+                                <div xmlns="http://www.w3.org/1999/xhtml">
+                                    <img src="${canvas.toDataURL('image/png')}" width="100%" height="100%"/>
+                                </div>
+                            </foreignObject>
+                        </svg>
+                    `;
+                    dataUrl = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgData);
+                    fileName = 'generated-image.svg';
+                    break;
+            }
+
+            // Create download link
+            const link = document.createElement('a');
+            link.href = dataUrl;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+        } catch (error) {
+            console.error('Error downloading image:', error);
+            this.updateStatus('Failed to download image', true);
+        }
     }
 
     updateRecordButton(isRecording) {
@@ -38,6 +116,7 @@ export class UIService {
     showLoading() {
         this.elements.loadingSpinner.classList.add('visible');
         this.elements.generatedImage.classList.remove('visible');
+        this.disableDownloadButtons();
     }
 
     hideLoading() {
@@ -47,7 +126,7 @@ export class UIService {
     updateStatus(message, isError = false) {
         const statusDiv = this.elements.statusDiv;
         statusDiv.textContent = message;
-        statusDiv.style.color = isError ? '#dc2626' : '#666';
+        statusDiv.style.color = isError ? '#dc2626' : '#ffffff';
         
         statusDiv.style.animation = 'none';
         statusDiv.offsetHeight; // Trigger reflow

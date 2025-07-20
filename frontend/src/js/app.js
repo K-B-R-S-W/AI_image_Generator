@@ -1,99 +1,110 @@
-import { AudioService } from './services/AudioService.js';
-import { ApiService } from './services/ApiService.js';
-import { UIService } from './services/UIService.js';
+import { ImageGenerator } from './pages/image-generator.js';
+import { BackgroundRemover } from './pages/background-remover.js';
 
 class App {
     constructor() {
-        this.audioService = new AudioService();
-        this.uiService = new UIService();
-        this.setupEventListeners();
+        console.log('Initializing App...');
+        this.initializeApp();
     }
 
-    setupEventListeners() {
-        // Text generation
-        this.uiService.elements.sendTextButton.addEventListener('click', () => this.handleTextGeneration());
-        this.uiService.elements.textInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') this.handleTextGeneration();
-        });
-
-        // Audio recording
-        this.uiService.elements.recordButton.addEventListener('click', () => this.handleRecording());
-
-        // Clear history
-        this.uiService.elements.clearHistoryBtn.addEventListener('click', () => this.uiService.clearHistory());
-    }
-
-    async handleTextGeneration() {
-        if (!this.uiService.validateInput()) return;
-
-        const text = this.uiService.getInputText();
-        this.uiService.showLoading();
-        this.uiService.updateStatus('Generating image...');
-        this.uiService.setButtonState('sendTextButton', false);
-
+    async initializeApp() {
         try {
-            const data = await ApiService.generateFromText(text);
+            // Wait for DOM to be ready
+            if (document.readyState === 'loading') {
+                await new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve));
+            }
+
+            console.log('DOM is ready');
+
+            // Get page container
+            this.pageContainer = document.getElementById('page-container');
+            if (!this.pageContainer) {
+                throw new Error('Page container not found');
+            }
+            console.log('Page container found:', this.pageContainer);
+
+            // Initialize page components
+            this.pages = {
+                'image-generator': new ImageGenerator(),
+                'background-remover': new BackgroundRemover()
+            };
+            console.log('Pages initialized:', Object.keys(this.pages));
+
+            this.currentPage = null;
+            this.setupNavigation();
             
-            if (data.image) {
-                this.uiService.updateImage(data.image);
-                this.uiService.updateChatHistory(text, data.image);
-                this.uiService.clearInput();
-                this.uiService.updateStatus('Image Generated Successfully!');
+            // Initialize with image generator page
+            console.log('Loading initial page...');
+            this.navigateToPage('image-generator');
+
+        } catch (error) {
+            console.error('Error initializing app:', error);
+        }
+    }
+
+    setupNavigation() {
+        try {
+            // Setup navigation
+            const navLinks = document.querySelectorAll('.nav-link');
+            console.log('Found nav links:', navLinks.length);
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const pageName = link.dataset.page;
+                    console.log('Navigation clicked:', pageName);
+                    this.navigateToPage(pageName);
+
+                    // Update active state
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                });
+            });
+
+            // Handle mobile menu
+            const menuToggle = document.createElement('button');
+            menuToggle.className = 'menu-toggle';
+            menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            document.body.appendChild(menuToggle);
+
+            menuToggle.addEventListener('click', () => {
+                const sidebar = document.querySelector('.sidebar');
+                sidebar.classList.toggle('active');
+            });
+
+        } catch (error) {
+            console.error('Error setting up navigation:', error);
+        }
+    }
+
+    navigateToPage(pageName) {
+        try {
+            console.log('Navigating to page:', pageName);
+            console.log('Current page:', this.currentPage);
+
+            if (this.currentPage) {
+                console.log('Clearing current page');
+                this.pageContainer.innerHTML = '';
+            }
+
+            const page = this.pages[pageName];
+            console.log('New page component:', page);
+
+            if (page) {
+                const element = page.getElement();
+                console.log('Page element:', element);
+                this.pageContainer.appendChild(element);
+                this.currentPage = pageName;
+                console.log('Page navigation complete');
             } else {
-                throw new Error(data.error || 'Failed to generate image');
+                console.error('Page not found:', pageName);
             }
         } catch (error) {
-            this.uiService.updateStatus(error.message, true);
-            this.uiService.hideLoading();
-        } finally {
-            this.uiService.setButtonState('sendTextButton', true);
-        }
-    }
-
-    async handleRecording() {
-        if (this.audioService.isRecording) {
-            await this.stopRecording();
-        } else {
-            await this.startRecording();
-        }
-    }
-
-    async startRecording() {
-        try {
-            await this.audioService.startRecording();
-            this.uiService.updateRecordButton(true);
-            this.uiService.updateStatus('Recording...');
-        } catch (error) {
-            this.uiService.updateStatus(error.message, true);
-        }
-    }
-
-    async stopRecording() {
-        try {
-            await this.audioService.stopRecording();
-            this.uiService.updateRecordButton(false);
-            this.uiService.updateStatus('Processing audio...');
-            this.uiService.showLoading();
-
-            const audioBase64 = await this.audioService.processAudio();
-            const data = await ApiService.generateFromAudio(audioBase64);
-
-            if (data.image) {
-                this.uiService.updateImage(data.image);
-                this.uiService.updateTranscription(data.text);
-                this.uiService.updateChatHistory(data.text || 'Audio Input', data.image);
-                this.uiService.updateStatus('Image Generated Successfully!');
-            } else {
-                throw new Error(data.error || 'Failed to generate image');
-            }
-        } catch (error) {
-            this.uiService.updateStatus(error.message, true);
-            this.uiService.hideLoading();
+            console.error('Error navigating to page:', error);
         }
     }
 }
 
-// Initialize the app when the DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    new App();
-}); 
+// Initialize the app
+console.log('Starting app initialization...');
+new App(); 
