@@ -1,0 +1,11 @@
+Flask
+flask-cors
+numpy
+pydub
+torch
+torchaudio
+transformers
+Pillow
+openai
+lameenc
+requests
